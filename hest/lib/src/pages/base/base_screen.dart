@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../home/home_tab.dart';
+import '../profile/profile_tab.dart';
 import '/src/config/custom_colors.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -24,9 +25,7 @@ class _BaseScreenState extends State<BaseScreen> {
             Container(
               color: Colors.green,
             ),
-            Container(
-              color: Colors.blue,
-            ),
+            const ProfileTab(),
             Container(
               color: Colors.yellow,
             ),

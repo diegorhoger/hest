@@ -1,4 +1,6 @@
+import '../models/cart_item_model.dart';
 import '../models/item_model.dart';
+import '../models/user_model.dart';
 
 ItemModel item1 = ItemModel(
   name: 'Garlic Burger',
@@ -178,3 +180,24 @@ List<String> categories = [
   'Sanduíches',
   'Sobremesas',
 ];
+
+List<CartItemModel> cartItems = [
+  CartItemModel(
+    item: item1,
+    quantity: 1,
+  ),
+  CartItemModel(
+    item: item2,
+    quantity: 1,
+  ),
+  CartItemModel(
+    item: item3,
+    quantity: 2,
+  ),
+];
+
+UserModel user = UserModel(
+  name: 'João da Silva Sauro',
+  email: 'joaosauro@gmail.com',
+  password: '123456',
+);

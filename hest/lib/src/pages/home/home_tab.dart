@@ -51,7 +51,7 @@ class _HomeTabState extends State<HomeTab> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (c) {
-                    return CartTab();
+                    return const CartTab();
                   }),
                 );
               },
