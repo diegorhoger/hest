@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'src/config/custom_colors.dart';
-import 'src/pages/auth/sign_in_screen.dart';
+import 'src/pages/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: const SignInScreen(),
+      home: const SplashScreen(),
     );
   }
 }

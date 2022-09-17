@@ -5,15 +5,38 @@ import '../models/item_model.dart';
 import '../pages/product/product_screen.dart';
 import '../services/utils_services.dart';
 
-class ItemTile extends StatelessWidget {
+class ItemTile extends StatefulWidget {
   final ItemModel item;
   final void Function(GlobalKey) cartAnimationMethod;
-  final GlobalKey imageGk = GlobalKey();
 
-  ItemTile({Key? key, required this.item, required this.cartAnimationMethod})
+  const ItemTile(
+      {Key? key, required this.item, required this.cartAnimationMethod})
       : super(key: key);
 
+  @override
+  State<ItemTile> createState() => _ItemTileState();
+}
+
+class _ItemTileState extends State<ItemTile> {
+  final GlobalKey imageGk = GlobalKey();
+
   final UtilsServices utilsServices = UtilsServices();
+
+  IconData addIcon = Icons.add;
+
+  Future<void> switchAddIcon() async {
+    setState(() => addIcon = Icons.check);
+    await Future.delayed(const Duration(milliseconds: 1500));
+    setState(() => addIcon = Icons.add);
+  }
+
+  IconData favIcon = Icons.favorite_outline;
+
+  Future<void> switchFavIcon() async {
+    setState(() => favIcon = Icons.favorite);
+    await Future.delayed(const Duration(milliseconds: 1500));
+    setState(() => favIcon = Icons.favorite_outline);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +48,7 @@ class ItemTile extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (c) {
-              return ProductScreen(item: item);
+              return ProductScreen(item: widget.item);
             }));
           },
           child: Card(
@@ -44,13 +67,13 @@ class ItemTile extends StatelessWidget {
                   // Product Image
                   Expanded(
                     child: Hero(
-                      tag: item.image,
+                      tag: widget.item.image,
                       child: Container(
                         key: imageGk,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
-                            item.image,
+                            widget.item.image,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -64,7 +87,7 @@ class ItemTile extends StatelessWidget {
                       top: 8,
                     ),
                     child: Text(
-                      item.name,
+                      widget.item.name,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),
                     ),
@@ -75,7 +98,7 @@ class ItemTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        utilsServices.priceToCurrency(item.price),
+                        utilsServices.priceToCurrency(widget.item.price),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -93,21 +116,26 @@ class ItemTile extends StatelessWidget {
         // Add to cart button
         Positioned(
           bottom: 48,
-          child: GestureDetector(
-            onTap: () {
-              cartAnimationMethod(imageGk);
-            },
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: CustomColors.customSwatchColor,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 16,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Material(
+              child: InkWell(
+                onTap: () {
+                  switchAddIcon();
+                  widget.cartAnimationMethod(imageGk);
+                },
+                child: Ink(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: CustomColors.customSwatchColor,
+                  ),
+                  child: Icon(
+                    addIcon,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ),
               ),
             ),
           ),
@@ -117,19 +145,27 @@ class ItemTile extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
-          child: GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: CustomColors.customSwatchColor,
-                borderRadius: BorderRadius.circular(50),
-              ),
-              child: const Icon(
-                Icons.favorite_outline,
-                color: Colors.white,
-                size: 20,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Material(
+              child: InkWell(
+                onTap: () {
+                  switchFavIcon();
+                  utilsServices.showToast(
+                      message: 'Produto adicionado aos Favoritos');
+                },
+                child: Ink(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: CustomColors.customSwatchColor,
+                  ),
+                  child: Icon(
+                    favIcon,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
               ),
             ),
           ),

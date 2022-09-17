@@ -1,15 +1,16 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:badges/badges.dart';
 
 import 'package:flutter/material.dart';
+import 'package:hest/src/pages/common_widgets/custom_shimmer.dart';
 
 import '../../components/category_tile.dart';
 import '../../components/item_tile.dart';
 import '../../config/custom_colors.dart';
 import '../../config/app_data.dart' as app_data;
 import '../cart/cart_tab.dart';
+import '../common_widgets/app_name_widget.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -28,6 +29,18 @@ class _HomeTabState extends State<HomeTab> {
     runAddToCardAnimation(gkImage);
   }
 
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,19 +49,8 @@ class _HomeTabState extends State<HomeTab> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text.rich(
-          TextSpan(
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-            children: [
-              TextSpan(text: 'he'),
-              TextSpan(text: '.'),
-              TextSpan(text: 'st'),
-            ],
-          ),
+        title: const AppNameWidget(
+          textTitleSize: 25,
         ),
         actions: [
           Padding(
@@ -175,24 +177,43 @@ class _HomeTabState extends State<HomeTab> {
 
             //Grid
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 1.3,
-                ),
-                itemCount: app_data.items.length,
-                itemBuilder: (_, index) {
-                  return ItemTile(
-                    item: app_data.items[index],
-                    cartAnimationMethod: itemSelectedCartAnimations,
-                  );
-                },
-              ),
+              child: !isLoading
+                  ? GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 1.3,
+                      ),
+                      itemCount: app_data.items.length,
+                      itemBuilder: (_, index) {
+                        return ItemTile(
+                          item: app_data.items[index],
+                          cartAnimationMethod: itemSelectedCartAnimations,
+                        );
+                      },
+                    )
+                  : GridView.count(
+                      padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 1.3,
+                      children: List.generate(
+                        10,
+                        (index) => const CustomShimmer(
+                            height: double.infinity,
+                            width: double.infinity,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                      ),
+                    ),
             ),
           ],
         ),

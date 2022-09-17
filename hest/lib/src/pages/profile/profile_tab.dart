@@ -24,6 +24,17 @@ class _ProfileTabState extends State<ProfileTab> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         children: [
+          // User Image
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Center(
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: Image.asset(app_data.user.image).image,
+              ),
+            ),
+          ),
+
           // User Name
           CustomTextField(
             readOnly: true,

@@ -198,6 +198,7 @@ List<CartItemModel> cartItems = [
 ];
 
 UserModel user = UserModel(
+  image: 'assets/images/user.jpg',
   name: 'João da Silva Sauro',
   email: 'joaosauro@gmail.com',
   password: '123456',
