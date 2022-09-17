@@ -1,5 +1,6 @@
 import '../models/cart_item_model.dart';
 import '../models/item_model.dart';
+import '../models/order_model.dart';
 import '../models/user_model.dart';
 
 ItemModel item1 = ItemModel(
@@ -201,3 +202,32 @@ UserModel user = UserModel(
   email: 'joaosauro@gmail.com',
   password: '123456',
 );
+
+List<OrderModel> orders = [
+  // Pedido 01
+  OrderModel(
+    id: 'HUQWLKNDL12',
+    copyAndPaste: 'qui1mi0s13n0-cia',
+    createdDateTime: DateTime.parse('2022-09-17 12:00:10.458'),
+    overdueDateTime: DateTime.parse('2022-09-17 13:00:10.458'),
+    status: 'pending_payment',
+    total: 150.60,
+    items: [
+      CartItemModel(item: item1, quantity: 1),
+      CartItemModel(item: item2, quantity: 1),
+    ],
+  ),
+  // Pedido 02
+  OrderModel(
+    id: 'HAUHSM1290',
+    copyAndPaste: 'ucoahnepf-cia',
+    createdDateTime: DateTime.parse('2022-09-17 11:22:11.356'),
+    overdueDateTime: DateTime.parse('2022-09-17 12:22:11.356'),
+    status: 'delivered',
+    total: 452.46,
+    items: [
+      CartItemModel(item: item2, quantity: 2),
+      CartItemModel(item: item3, quantity: 3),
+    ],
+  ),
+];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../home/home_tab.dart';
+import '../orders/orders_tab.dart';
 import '../profile/profile_tab.dart';
 import '/src/config/custom_colors.dart';
 
@@ -26,9 +27,7 @@ class _BaseScreenState extends State<BaseScreen> {
               color: Colors.green,
             ),
             const ProfileTab(),
-            Container(
-              color: Colors.yellow,
-            ),
+            const OrdersTab(),
           ]),
 
       // Navigation Bottom Menu
